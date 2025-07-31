@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - REMATCH TÜRKİYE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">REMATCH TÜRKİYE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Anasayfa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">Hakkımızda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/gallery">Galeri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">İletişim</a>
+                    </li>
+                </ul>
+                <div class="navbar-nav" id="authButtons">
+                    <a class="nav-link btn btn-outline-light me-2" href="/login">Giriş Yap</a>
+                    <a class="nav-link btn btn-primary" href="/register">Kayıt Ol</a>
+                </div>
+                <div class="navbar-nav d-none" id="userMenu">
+                    <a class="nav-link" href="/profile">Profil</a>
+                    <a class="nav-link" href="#" id="logoutBtn">Çıkış Yap</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-4">
+        <%- content %>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p>© 2024 REMATCH TÜRKİYE. All rights reserved.</p>
+                </div>
+                <div class="footer-contact">
+                    <div class="footer-social">
+                        <a href="https://instagram.com/rematch_tr" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="mailto:rematchtr.iletisim@gmail.com">
+                            <i class="far fa-envelope"></i>
+                        </a>
+                    </div>
+                    <p>
+                        <a href="mailto:rematchtr.iletisim@gmail.com">rematchtr.iletisim@gmail.com</a>
+                    </p>
+                    <p>
+                        <a href="https://instagram.com/rematch_tr" target="_blank">@rematch_tr</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Check authentication status and update UI
+        async function checkAuth() {
+            try {
+                const response = await fetch('/api/auth/me');
+                if (response.ok) {
+                    const user = await response.json();
+                    document.getElementById('authButtons').classList.add('d-none');
+                    document.getElementById('userMenu').classList.remove('d-none');
+                } else {
+                    document.getElementById('authButtons').classList.remove('d-none');
+                    document.getElementById('userMenu').classList.add('d-none');
+                }
+            } catch (error) {
+                console.error('Auth check error:', error);
+            }
+        }
+
+        // Logout handler
+        document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                const response = await fetch('/api/auth/logout', {
+                    method: 'POST'
+                });
+                if (response.ok) {
+                    window.location.href = '/';
+                }
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+
+        // Check auth status when page loads
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+</html> 

@@ -1,0 +1,110 @@
+<%- include('layout', { title: 'Kayıt Ol', content: `
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body p-5">
+                    <h2 class="text-center mb-4">Kayıt Ol</h2>
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Kullanıcı Adı</label>
+                            <input type="text" class="form-control" id="username" required minlength="3">
+                            <div class="form-text">En az 3 karakter olmalıdır.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">E-posta Adresi</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Şifre</label>
+                            <input type="password" class="form-control" id="password" required minlength="6">
+                            <div class="form-text">En az 6 karakter olmalıdır.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Şifre Tekrar</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">Kayıt Ol</button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-4">
+                        <p class="mb-0">Zaten hesabınız var mı? <a href="/login" class="text-decoration-none">Giriş Yap</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notification Overlay -->
+<div class="notification-overlay" id="notificationOverlay">
+    <div class="notification-popup" id="notificationPopup">
+        <div class="notification-title" id="notificationTitle"></div>
+        <div class="notification-message" id="notificationMessage"></div>
+        <div class="notification-buttons">
+            <button class="btn btn-primary" id="notificationButton">Tamam</button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    // Validate passwords match
+    if (password !== confirmPassword) {
+        showNotification('Hata', 'Şifreler eşleşmiyor.', 'error');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            showNotification('Başarılı', 'Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...', 'success', () => {
+                window.location.href = '/login';
+            });
+        } else {
+            showNotification('Hata', data.error, 'error');
+        }
+    } catch (error) {
+        console.error('Registration error:', error);
+        showNotification('Hata', 'Kayıt işlemi sırasında bir hata oluştu.', 'error');
+    }
+});
+
+function showNotification(title, message, type = 'info', callback = null) {
+    const overlay = document.getElementById('notificationOverlay');
+    const popup = document.getElementById('notificationPopup');
+    const titleElement = document.getElementById('notificationTitle');
+    const messageElement = document.getElementById('notificationMessage');
+    const button = document.getElementById('notificationButton');
+
+    titleElement.textContent = title;
+    messageElement.textContent = message;
+    popup.className = 'notification-popup ' + type;
+    overlay.classList.add('show');
+
+    button.onclick = () => {
+        overlay.classList.remove('show');
+        if (callback) {
+            setTimeout(callback, 300);
+        }
+    };
+}
+</script>
+`}) %> 

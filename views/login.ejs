@@ -1,0 +1,100 @@
+<%- include('layout', { title: 'Login', content: `
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body p-5">
+                    <h2 class="text-center mb-4">Giriş Yap</h2>
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Kullanıcı Adı</label>
+                            <input type="text" class="form-control" id="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Şifre</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">Giriş Yap</button>
+                        </div>
+                    </form>
+                    <div class="text-center mt-4">
+                        <p class="mb-0">Hesabınız yok mu? <a href="/register" class="text-decoration-none">Kayıt Ol</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notification Overlay -->
+<div class="notification-overlay" id="notificationOverlay">
+    <div class="notification-popup" id="notificationPopup">
+        <div class="notification-title" id="notificationTitle"></div>
+        <div class="notification-message" id="notificationMessage"></div>
+        <div class="notification-buttons">
+            <button class="btn btn-primary" id="notificationButton">Tamam</button>
+        </div>
+    </div>
+</div>
+`}) %>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    console.log('Attempting login with username:', username);
+    
+    try {
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+        
+        const data = await response.json();
+        console.log('Login response:', data);
+        
+        if (response.ok) {
+            showNotification('Başarılı', 'Giriş başarılı! Yönlendiriliyorsunuz...', 'success', () => {
+                window.location.href = '/';
+            });
+        } else {
+            showNotification('Hata', data.error, 'error');
+        }
+    } catch (error) {
+        console.error('Login error:', error);
+        showNotification('Hata', 'Giriş yapılırken bir hata oluştu', 'error');
+    }
+});
+
+function showNotification(title, message, type = 'info', callback = null) {
+    const overlay = document.getElementById('notificationOverlay');
+    const popup = document.getElementById('notificationPopup');
+    const titleElement = document.getElementById('notificationTitle');
+    const messageElement = document.getElementById('notificationMessage');
+    const button = document.getElementById('notificationButton');
+
+    // Set content
+    titleElement.textContent = title;
+    messageElement.textContent = message;
+
+    // Set type
+    popup.className = 'notification-popup ' + type;
+
+    // Show overlay
+    overlay.classList.add('show');
+
+    // Handle button click
+    button.onclick = () => {
+        overlay.classList.remove('show');
+        if (callback) {
+            setTimeout(callback, 300); // Wait for animation to finish
+        }
+    };
+}
+</script> 

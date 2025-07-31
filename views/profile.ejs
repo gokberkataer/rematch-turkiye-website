@@ -1,0 +1,57 @@
+<%- include('layout', { title: 'Profil', content: `
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Profil Bilgileri</h2>
+                    <div class="profile-info">
+                        <div class="mb-3">
+                            <label class="fw-bold">Kullanıcı Adı:</label>
+                            <span id="username"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold">E-posta:</label>
+                            <span id="email"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="fw-bold">Üyelik Tarihi:</label>
+                            <span id="joinDate"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+async function loadUserProfile() {
+    try {
+        const response = await fetch('/api/auth/me');
+        if (response.ok) {
+            const user = await response.json();
+            document.getElementById('username').textContent = user.username;
+            document.getElementById('email').textContent = user.email;
+            
+            // Tarihi Türkçe formatla
+            const joinDate = new Date(user.createdAt);
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('joinDate').textContent = joinDate.toLocaleDateString('tr-TR', options);
+        } else {
+            window.location.href = '/login';
+        }
+    } catch (error) {
+        console.error('Profil yükleme hatası:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', loadUserProfile);
+</script>
+` }) %> 
