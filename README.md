@@ -75,26 +75,7 @@ Bu proje sayesinde:
 - RESTful API geliştirme
 - Dosya yükleme işlemleri
 
-## 📸 Ekran Görüntüleri
-
-[Buraya projenizin ekran görüntülerini ekleyebilirsiniz]
-
-## 🤝 Katkıda Bulunma
-
-1. Fork yapın
-2. Feature branch oluşturun (`git checkout -b feature/AmazingFeature`)
-3. Commit yapın (`git commit -m 'Add some AmazingFeature'`)
-4. Push yapın (`git push origin feature/AmazingFeature`)
-5. Pull Request açın
-
-## 📄 Lisans
-
-Bu proje MIT lisansı altında lisanslanmıştır.
 
 ## İletişim
 
-Bu proje hakkında sorularınız için: gokberkataer@gmail.com
-
----
-
-Bu proje, web geliştirme becerilerimi geliştirmek amacıyla kişisel olarak geliştirilmiştir. 
+Bu proje hakkında sorularınız için: ataerbozdemir@gmail.com
