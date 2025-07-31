@@ -1,22 +1,22 @@
-# 🚀 Rematch Türkiye Community Website
+# Rematch Türkiye Community Website
 
-Modern topluluk platformu - kullanıcı yönetimi, responsive tasarım ve etkileşimli özelliklerle.
+Bu proje, Rematch Türkiye topluluğu için geliştirdiğim modern web uygulamasıdır. Topluluk üyelerinin etkileşim kurabileceği, etkinlikler hakkında bilgi alabileceği ve birbirleriyle iletişim kurabileceği bir platform olarak tasarlanmıştır.
 
-## 🛠️ Teknolojiler
+## Kullanılan Teknolojiler
 
 **Backend:** Node.js, Express.js, MongoDB  
 **Frontend:** EJS, HTML5, CSS3, JavaScript, Bootstrap 5  
 **Authentication:** bcryptjs, express-session  
 **Tools:** Mongoose ODM, Multer, Nodemon
 
-## ✨ Özellikler
+## Proje Özellikleri
 
-- 🔐 Güvenli kullanıcı kayıt/giriş sistemi
-- 📱 Responsive tasarım (mobile-first)
-- 📤 Dosya yükleme sistemi
-- 💬 İletişim formu
-- 🎨 Modern UI/UX tasarım
-- 🔒 Session-based authentication
+- Kullanıcı kayıt ve giriş sistemi
+- Responsive tasarım (mobil uyumlu)
+- Dosya yükleme özelliği
+- İletişim formu
+- Modern kullanıcı arayüzü
+- Session tabanlı kimlik doğrulama
 
 ## 🚀 Kurulum
 
@@ -65,14 +65,15 @@ http://localhost:3000
 └── package.json     # Proje bağımlılıkları
 ```
 
-## 🎯 Geliştirilen Beceriler
+## Öğrendiğim Konular
 
-- **Full-Stack Development** - Node.js backend + EJS frontend
-- **Database Management** - MongoDB ile veri modelleme
-- **Authentication & Security** - bcryptjs ile şifre hashleme
-- **Responsive Design** - Bootstrap 5 ile modern UI
-- **API Development** - RESTful endpoints
-- **File Handling** - Multer ile dosya upload
+Bu proje sayesinde:
+- Node.js ve Express.js ile backend geliştirme
+- MongoDB veritabanı yönetimi ve Mongoose ODM kullanımı
+- Kullanıcı kimlik doğrulama ve güvenlik
+- Responsive web tasarımı
+- RESTful API geliştirme
+- Dosya yükleme işlemleri
 
 ## 📸 Ekran Görüntüleri
 
@@ -90,10 +91,10 @@ http://localhost:3000
 
 Bu proje MIT lisansı altında lisanslanmıştır.
 
-## 📞 İletişim
+## İletişim
 
-[Buraya iletişim bilgilerinizi ekleyebilirsiniz]
+Bu proje hakkında sorularınız için: gokberkataer@gmail.com
 
 ---
 
-⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın! 
+Bu proje, web geliştirme becerilerimi geliştirmek amacıyla kişisel olarak geliştirilmiştir. 
